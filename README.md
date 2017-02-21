@@ -1,5 +1,5 @@
 # Rstan在贝叶斯分析中的运用
-0. Rstan的安装
+## Rstan的安装
 --------------------------------
 - 下载安装与 R 版本相对应的的 [Rtools](http://cran.r-project.org/bin/windows/Rtools/)。安装过程注意下图中的选项
 ![editpathrtools](https://raw.github.com/wiki/stan-dev/rstan/editpathrtools.png)
@@ -37,16 +37,11 @@ Sys.setenv(MAKEFLAGS = "-j4")
 install.packages("rstan", type = "source")
 ```
 
-1. 基本分布拟合(Fitting distribution)
+## Rstan 的应用
 ----------------------------
-应用极大似然估计和贝叶斯估计对基本分布进行拟合，例如[伽马分布](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20fitting%20distribution.r)
-
-2. 线性回归模型(Linear regression model)
----------------------------
-3. 广义线性模型(Generalized linear model)
----------------------------
-4. 案例分析（准备金数据分析）
--------
-
+* 基本分布的拟合（[伽马分布](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20fitting%20distribution.r)）
+* 线性回归模型(Linear regression model)(多元回归)[https://github.com/lzx89757/Introduction-to-Rstan/blob/master/2.%20%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B(LM).r]
+* 广义线性模型(Generalized linear model)(伽马回归模型)[https://github.com/lzx89757/Introduction-to-Rstan/blob/master/3.%20%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B(GLM).r]
+* 准备金数据分析(流量三角形拟合)[https://github.com/lzx89757/Introduction-to-Rstan/blob/master/4.%20%E5%87%86%E5%A4%87%E9%87%91%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.r]
 
 
