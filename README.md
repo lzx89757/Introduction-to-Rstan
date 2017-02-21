@@ -29,7 +29,7 @@ c:\Rtools\bin\make.exe
 install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies=TRUE)
 ```
 
-或者可以尝试下述代码
+* 或者可以尝试下述代码
 
 ```R
 # note: replace the '4' with the number of cores you want to devote to the build
