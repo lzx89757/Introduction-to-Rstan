@@ -1,4 +1,4 @@
-# Rstan在贝叶斯分析中的运用
+# Rstan 在贝叶斯分析中的运用
 ## [Rstan 主页](http://mc-stan.org/interfaces/rstan)
 ## Rstan 安装
 --------------------------------
