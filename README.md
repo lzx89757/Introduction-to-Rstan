@@ -28,9 +28,9 @@ c:\Rtools\bin\make.exe
 # note: omit the 's' in 'https' if you cannot handle https downloads
 install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies=TRUE)
 ```
-Make sure not to omit `dependencies=TRUE`. 
 
-* If all else fails you can try to install the **rstan** package from source via
+或者可以尝试下述代码
+
 ```R
 # note: replace the '4' with the number of cores you want to devote to the build
 Sys.setenv(MAKEFLAGS = "-j4") 
