@@ -39,6 +39,8 @@ install.packages("rstan", type = "source")
 
 1. 基本分布拟合(Fitting distribution)
 ----------------------------
+应用极大似然估计和贝叶斯估计对基本分布进行拟合，例如[伽马分布](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20fitting%20distribution.r)
+
 2. 线性回归模型(Linear regression model)
 ---------------------------
 3. 广义线性模型(Generalized linear model)
