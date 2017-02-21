@@ -1,5 +1,6 @@
 # Rstan在贝叶斯分析中的运用
-## Rstan的安装
+## [Rstan 主页](http://mc-stan.org/interfaces/rstan)
+## Rstan 安装
 --------------------------------
 - 下载安装与 R 版本相对应的的 [Rtools](http://cran.r-project.org/bin/windows/Rtools/)。安装过程注意下图中的选项
 ![editpathrtools](https://raw.github.com/wiki/stan-dev/rstan/editpathrtools.png)
@@ -37,7 +38,7 @@ Sys.setenv(MAKEFLAGS = "-j4")
 install.packages("rstan", type = "source")
 ```
 
-## Rstan 的应用
+## Rstan 应用
 ----------------------------
 * 基本分布的拟合-[伽马分布](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20fitting%20distribution.r)
 * 线性回归模型(Linear regression model)-[多元回归模型](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/2.%20%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B(LM).r)
