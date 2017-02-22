@@ -1,10 +1,10 @@
 # ===========================================================   
-# 4. °¸Àı·ÖÎö£¨×¼±¸½ğÊı¾İÄâºÏ£©
+# 4. æ¡ˆä¾‹åˆ†æï¼ˆå‡†å¤‡é‡‘æ•°æ®æ‹Ÿåˆï¼‰
 # =========================================================== 
 library(data.table)
-# ¶ÁÈ¡Êı¾İ¿ò¸ñÊ½µÄÊı¾İ
+# è¯»å–æ•°æ®æ¡†æ ¼å¼çš„æ•°æ®
   dt = fread("C:/Users/Administrator/Desktop/Israel data.csv")  
-# ×ª»¯ÎªÁ÷Á¿Èı½ÇĞÎ¸ñÊ½
+# è½¬åŒ–ä¸ºæµé‡ä¸‰è§’å½¢æ ¼å¼
   triangle <- matrix(data = 0, nrow = 18, ncol = 18)
   obs = 0
   for(i in 1:18){
@@ -15,14 +15,16 @@ library(data.table)
   }
 
 # ----------------------------------------------------------
-# ¼«´óËÆÈ»¹À¼Æ
+# æå¤§ä¼¼ç„¶ä¼°è®¡
 # ----------------------------------------------------------
   library(gamlss)
   mGA <- gamlss(y ~ factor(i) + factor(j), data = dt, family = GA(mu.link = 'log'))
-# ¶Ô×¼±¸½ğÊı¾İ½øĞĞÔ¤²â
+# å¯¹å‡†å¤‡é‡‘æ•°æ®è¿›è¡Œé¢„æµ‹
   beta.mle <- coef(mGA)
-# ×ª»¯ÎªÊı¾İ¿ò¸ñÊ½µÄÊı¾İ
+# è½¬åŒ–ä¸ºæ•°æ®æ¡†æ ¼å¼çš„æ•°æ®
   dtnew <- data.table(i = rep(1:18, each = 18), j = rep(1:18, 18))
+
+# éœ€è¦é¢„æµ‹çš„æ•°æ®æ ¼å¼(åŒ…å«ä¸Šä¸‰è§’çš„è§‚æµ‹å€¼ï¼Œå’Œä¸‹ä¸‰è§’å¾…é¢„æµ‹çš„éƒ¨åˆ†)
   ynew <- c()
   for(i in 1:18){
     for(j in 1:18){
@@ -37,7 +39,7 @@ library(data.table)
 # -----------------------------------------------------------
 # Bayesian - rstan
 # -----------------------------------------------------------
-# Éè¼Æ¾ØÕó
+# è®¾è®¡çŸ©é˜µ
   library(rstan)
   X <- model.matrix(~ factor(i) + factor(j), data = dt)
   Xpred <- model.matrix(~ factor(i) + factor(j), data = dtnew)
@@ -94,16 +96,16 @@ library(data.table)
                pars = c('beta', 'sigma','sigma2', 'lp__', 'PointPosteriors', 'ypred'),
                iter = 10000, warmup = 5000, thin = 5, chains = 4)
 
-# Êä³ö²ÎÊı¹À¼ÆÖµ
+# è¾“å‡ºå‚æ•°ä¼°è®¡å€¼
   print(sfit, pars = c('beta', 'sigma', 'lp__'),
         probs = c(0.05, 0.5, 0.95))
-#Êä³ö»Ø¹éÏµÊıµÄÑù±¾Â·¾¶Í¼
-  traceplot(sfit, pars = c('beta', 'sigma'), inc_warmup = FALSE)  # ¹ì¼£Í¼
-  stan_ac(sfit, pars = c('beta', 'sigma'), inc_warmup = FALSE)    # ×ÔÏà¹ØÍ¼
-  stan_hist(sfit, pars = c('sigma2', 'sigma'), inc_warmup = FALSE)  # ºóÑé·Ö²¼Ö±·½Í¼
+#è¾“å‡ºå›å½’ç³»æ•°çš„æ ·æœ¬è·¯å¾„å›¾
+  traceplot(sfit, pars = c('beta', 'sigma'), inc_warmup = FALSE)  # è½¨è¿¹å›¾
+  stan_ac(sfit, pars = c('beta', 'sigma'), inc_warmup = FALSE)    # è‡ªç›¸å…³å›¾
+  stan_hist(sfit, pars = c('sigma2', 'sigma'), inc_warmup = FALSE)  # åéªŒåˆ†å¸ƒç›´æ–¹å›¾
 
 # ------------------------------------------------------------------  
-# ¼ÆËã WAIC£¨ÀàËÆAICÍ³¼ÆÁ¿£¬ÆÀ¼ÛÄ£ĞÍµÄÄâºÏÓÅ¶È£©
+# è®¡ç®— WAICï¼ˆç±»ä¼¼AICç»Ÿè®¡é‡ï¼Œè¯„ä»·æ¨¡å‹çš„æ‹Ÿåˆä¼˜åº¦ï¼‰
 # ------------------------------------------------------------------
   WAIC <- function(pointMatrix) {
     lppd <- sum(log(apply(pointMatrix, 2, FUN = mean)))
@@ -113,7 +115,12 @@ library(data.table)
   PP <- extract(sfit, pars = 'PointPosteriors')$PointPosteriors
   WAIC(PP)
 # -----------------------------------------------------------------
-# ÌáÈ¡ HMC ³éÑùÑù±¾
+# ç¬¬ä¸€ç§æ–¹æ³•ï¼šé¢„æµ‹ï¼ˆåˆ©ç”¨ generated quantities é‡Œé¢çš„å‡½æ•°ï¼‰
+# -----------------------------------------------------------------
+  y_rep <- yextract(sfit, pars = 'ypred')$ypred
+# -----------------------------------------------------------------
+# ç¬¬äºŒç§æ–¹æ³•ï¼šé¢„æµ‹ï¼ˆä¸éœ€è¦å†™ generated quantities é‡Œé¢çš„å‡½æ•°ï¼‰
+# ç›´æ¥æå– HMC æŠ½æ ·æ ·æœ¬
 # -----------------------------------------------------------------
   set.seed(1123)
   beta.mcmc <- extract(sfit, pars = 'beta')$beta
@@ -126,15 +133,10 @@ library(data.table)
     mu <- exp(Xpred%*%(beta))
     y_rep[, s] <- rGA(1, mu = mu, sigma = sigma)
   }
-# ÒÔÑù±¾µÄ¾ùÖµ×÷ÎªÔ¤²âÖµ
+
+# ä»¥æ ·æœ¬çš„å‡å€¼ä½œä¸ºé¢„æµ‹å€¼
   y.bayes <- apply(y_rep, 1, mean)
   dtnew$y.bayes <- y.bayes
-  
-  plot(y.mle, y.bayes)
-  abline(a = 0, b = 1)
-
-# -----------------------------------------------------------------------------------
-# Ò»ÑùµÄ½á¹û
-  ypred.mcmc <- extract(sfit, pars = 'ypred')$ypred
-  y.bayes <- apply(ypred.mcmc, 2, mean)
-  dtnew$y.bayes <- y.bayes
+# ==========================================================
+# æœªèµ”æ¬¾å‡†å¤‡é‡‘çš„é¢„æµ‹åˆ†å¸ƒ(æœªå†³èµ”æ¬¾å‡†å¤‡é‡‘ = ä¸‹ä¸‰è§’é¢„æµ‹å€¼ä¹‹å’Œ)
+# ==========================================================
