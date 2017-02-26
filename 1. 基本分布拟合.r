@@ -1,18 +1,18 @@
 # ===========================================================
-# 1. »ù±¾·Ö²¼ÄâºÏ(fit distribution)
+# 1. åŸºæœ¬åˆ†å¸ƒæ‹Ÿåˆ(fit distribution)
 # ===========================================================
-# Ù¤Âí·Ö²¼Ä£Äâ
+# ä¼½é©¬åˆ†å¸ƒæ¨¡æ‹Ÿ
   set.seed(111)
   N <- 100
   y <- rgamma(N, shape = 30, rate = 2)
   mydat <- list(y=y, N=N)
 
-# ÄâºÏÙ¤Âí·Ö²¼ - fitdist
+# æ‹Ÿåˆä¼½é©¬åˆ†å¸ƒ - fitdist
   library(fitdistrplus)
   fit.GA2 <- fitdist(data = y, distr = 'gamma')
   summary(fit.GA2) 
 
-# ÄâºÏÙ¤Âí·Ö²¼ - Bayesian
+# æ‹Ÿåˆä¼½é©¬åˆ†å¸ƒ - Bayesian
   library(rstan)
   model.GA <-'
     data{
@@ -27,11 +27,11 @@
     target += gamma_lpdf(y|alpha, beta); 
   }
   '
-# Ä£ĞÍÄâºÏ
+# æ¨¡å‹æ‹Ÿåˆ
   fit.GA <- stan(model_code = model.GA, data = mydat, 
                  iter = 10000, warmup = 2000, thin = 10,
                  chains = 4)
   print(fit.GA, pars=c('alpha','beta','lp__'), digits_summary = 3, probs=c(0.025,0.5,0.975))
-# Ä£ĞÍÕï¶Ï  
-  traceplot(fit.GA, pars = c('alpha','beta'), inc_warmup = FALSE)  # ¹ì¼£Í¼
-  stan_ac(fit.GA, pars = c('alpha','beta'), inc_warmup = FALSE)    # ×ÔÏà¹ØÍ¼
+# æ¨¡å‹è¯Šæ–­  
+  traceplot(fit.GA, pars = c('alpha','beta'), inc_warmup = FALSE)  # è½¨è¿¹å›¾
+  stan_ac(fit.GA, pars = c('alpha','beta'), inc_warmup = FALSE)    # è‡ªç›¸å…³å›¾
