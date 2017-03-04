@@ -1,8 +1,10 @@
 # Rstan 在贝叶斯分析中的运用
+
 ## [Rstan 主页](http://mc-stan.org/interfaces/rstan)
+
 主要包括 stan 的下载、安装、使用手册以及相应的例子
+
 ## Rstan 安装
---------------------------------
 - 下载安装与 R 版本相对应的的 [Rtools](http://cran.r-project.org/bin/windows/Rtools/)。安装过程注意下图中的选项
 ![editpathrtools](https://raw.github.com/wiki/stan-dev/rstan/editpathrtools.png)
 * 退出当前的 R，然后重新启动 R
