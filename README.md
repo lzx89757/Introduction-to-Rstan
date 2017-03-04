@@ -38,13 +38,34 @@ Sys.setenv(MAKEFLAGS = "-j4")
 install.packages("rstan", type = "source")
 ```
 
+# Rstan 在贝叶斯分析中的运用
+
+
 ## Rstan 应用
-----------------------------
-* 基本分布的拟合-[伽马分布](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20%E5%9F%BA%E6%9C%AC%E5%88%86%E5%B8%83%E6%8B%9F%E5%90%88.r)
-* 线性回归模型(Linear regression model)-[多元回归模型](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/2.%20%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B(LM).r)
-* 广义线性模型(Generalized linear model)-[伽马回归模型](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/3.%20%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B(GLM).r)
-* 准备金数据分析-[流量三角形拟合](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/4.%20%E5%87%86%E5%A4%87%E9%87%91%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.r)
-* [数据（流量三角形格式）](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/triangle%20data(%E6%B5%81%E9%87%8F%E4%B8%89%E8%A7%92%E5%BD%A2%E6%A0%BC%E5%BC%8F).csv)
-* [数据（数据框格式）](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/triangle%20data(%E6%95%B0%E6%8D%AE%E6%A1%86%E6%A0%BC%E5%BC%8F).csv)
-### 数据说明
-本数据是国外一家保险公司私家车业务线的流量三角形数据。该数据给出了55个上三角的已付增量赔款以及各个事故年的已收保费。
+### [1. 基本分布的拟合](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/1.%20%E5%9F%BA%E6%9C%AC%E5%88%86%E5%B8%83%E6%8B%9F%E5%90%88.r)
+* 假设伽马分布的均值为15，形状参数（shape）和比率参数（rate）分别为 30 和 2。请模拟 1000 个服从该伽马分布的随机数
+* 基于这组随机数应用 Rstan 估计伽马分布的两个参数
+### [2. 线性回归模型(Linear regression model)](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/2.%20%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B(LM).r)
+* 假设 y 服从正态分布，标准差为 2，均值可以表示为三个协变量的线性函数，即 μ=10+0.2*x1-0.3*x2+0.4*x3
+* 三个协变量都服从标准正态分布
+* 模拟 1000 个因变量和协变量的观察值
+* 基于这组模拟数据应用 Rstan 建立线性回归模型。
+
+### [3. 广义线性模型(Generalized linear model)](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/3.%20%E5%B9%BF%E4%B9%89%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B(GLM).r)
+* 假设因变量 y 服从伽马分布，均值可以表示为三个协变量的线性函数，即 μ=5+1.2*x1+1.3*x2+1.4*x3
+* 三个协变量都服从均值为 0.1 的指数分布
+* 请模拟 1000 个因变量和协变量的观察值
+* 基于这组模拟数据应用Rstan建立回归模型。
+
+### [4. 准备金数据分析](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/4.%20%E5%87%86%E5%A4%87%E9%87%91%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.r)
+本数据是国外一家保险公司私家车业务线的流量三角形数据。该数据给出了55个上三角的已付增量赔款以及各个事故年的已收保费，其中数据分为
+
+* [流量三角形格式](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/triangle%20data(%E6%B5%81%E9%87%8F%E4%B8%89%E8%A7%92%E5%BD%A2%E6%A0%BC%E5%BC%8F).csv)
+* [数据框格式](https://github.com/lzx89757/Introduction-to-Rstan/blob/master/triangle%20data(%E6%95%B0%E6%8D%AE%E6%A1%86%E6%A0%BC%E5%BC%8F).csv) 
+
+在未决赔款准备金评估的传统方法中，链锑法是最主要的评估方法之一，对准备金的预测结果与（过离散）泊松回归模型是等价的
+
+* 下面应用 Rstan 建立对该数据建立回归模型，并预测下三角的增量赔款，同时给出未决赔款准备金的预测均值和预测分布
+* 将预测结果与链锑法相比较
+
+
