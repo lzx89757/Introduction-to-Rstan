@@ -1,6 +1,9 @@
 # Rstan 在贝叶斯分析中的运用
 
+Lee
+
 ## [Rstan 主页](http://mc-stan.org/interfaces/rstan)
+
 
 主要包括 stan 的下载、安装、使用手册以及相应的例子：
 
